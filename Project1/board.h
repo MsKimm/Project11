@@ -3,7 +3,7 @@
 #include "page.h"
 
 using std::endl;
-using std::ofstream;
+using std::ofstream; //
 
 class Board {
     public:
@@ -84,6 +84,51 @@ void Board::print_job(int job_idx, char job_type, int id) {
 
 
 void Board::insert_page(int x, int y, int width, int height, int id, int content) {
+    // //int -> char 로 변경
+    // // 페이지에 추가하기
+    // // Page pid;
+    // // pid.x = x;
+    // // pid.y = y;
+    // // pid.width = width;
+    // // pid.height = height;
+    // // pid.id = id;
+    // // pid.content = content;
+
+    // 줄기 만들기
+    // int page_c[num_jobs][num_jobs]; 관리할 차트, -1로 채우기
+    // int num_r = 0; 뿌리 갯수
+    // bool overlap = false;
+    // for(int i=0; i<width; i++)
+    // {
+    //     for(int j=0; j<height; j++)
+    //     {
+    //         if(board[(x+i)*(y+j)] != " ")
+    //         {
+    //             overlap = true;
+    //             어디랑 겹쳤는지 찾기
+    //             int over_id = 겹친 아이디
+    //             break;
+    //         }
+    //     }
+    // }
+    // if(overlap == false) 새로운 줄기 생성
+    // {
+    //     num_r +=1;
+    //     page_c[num_r+1][0] = id;
+    // }
+    // else
+    // {
+    //     좀더 생각...
+    // }
+
+    // for(int i=0; i<width; i++)
+    // {
+    //     for(int j=0; j<height; j++)
+    //     {
+    //         output << board[(x+i)*(y+j)] << content;
+    //     }
+    // }
+    // print_board();
 
 }
 
