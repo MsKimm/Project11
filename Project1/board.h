@@ -86,6 +86,8 @@ void Board::print_job(int job_idx, char job_type, int id) {
 void Board::insert_page(int x, int y, int width, int height, int id, int content) {
     Page p(x, y, width, height, id, content);
 
+    // n(횟수 카운팅하는거 만들기)
+    n += 1;
     for (int i = 0; i < p_v.size(); i++) {
         for (int j = y; j < y+height; j++) {
             for (int k = x; k < x+width; k++) {
@@ -109,12 +111,15 @@ void Board::insert_page(int x, int y, int width, int height, int id, int content
             }
             
     }
+    print_board();
+    print_job(n, 'i',  id);
 }
 
 void Board::delete_page(int id) {   //8
 
     vector <int> temp_vec;
 
+    n += 1;
     for (int i = 0; i < p_v.size(); i++) {
         if (p_v[i].getid() == id) {
             temp_vec = p_v[i].get_vec();   // 그 페이지의 above 를 가져옴
@@ -122,18 +127,42 @@ void Board::delete_page(int id) {   //8
     }
     if (temp_vec.empty()) {
         //보드에서 해당 페이지를 지워준다.
+        //getboard로 보드 저장하기 size = p_v.size()
+        p_v[size-1].getboard();
+        print_board();
+        print_job(n, 'i',  id);
     }
     for (int i = 0; i < temp_vec.size(); i++) {
         delete_page(temp_vec[i]);
     }
+    
 
 }
 
 void Board::modify_content(int id, char content) {
-   
-
+Page p(x, y, width, height, id, content);
+for(i=0; i<pv.size(); i++ )
+{
+    if(p_v[i].getid() == id)
+    {
+        p = p_v[i];
+    }
+}
+//delete_board, make_board 만들기
+//delete_board
+//insert_page(p.getX(), p.getY(), p.getW(), p.getH(), p.getid, content)
+//make_board
 }
 void Board::modify_position(int id, int x, int y) {
-   
-    
+   Page p(x, y, width, height, id, content);
+for(i=0; i<pv.size(); i++ )
+{
+    if(p_v[i].getid() == id)
+    {
+        p = p_v[i];
+    }
+}
+    //delete_board
+    //insert_page(x,y, p.getW(), p.getH(), p.getid, p.getcont)
+    //make_board
 }
