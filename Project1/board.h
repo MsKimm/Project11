@@ -3,7 +3,7 @@
 #include "page.h"
 
 using std::endl;
-using std::ofstream; //
+using std::ofstream; 
 
 class Board {
     public:
@@ -84,56 +84,49 @@ void Board::print_job(int job_idx, char job_type, int id) {
 
 
 void Board::insert_page(int x, int y, int width, int height, int id, int content) {
-    // //int -> char 로 변경
-    // // 페이지에 추가하기
-    // // Page pid;
-    // // pid.x = x;
-    // // pid.y = y;
-    // // pid.width = width;
-    // // pid.height = height;
-    // // pid.id = id;
-    // // pid.content = content;
+    Page p(x, y, width, height, id, content);
 
-    // 줄기 만들기
-    // int page_c[num_jobs][num_jobs]; 관리할 차트, -1로 채우기
-    // int num_r = 0; 뿌리 갯수
-    // bool overlap = false;
-    // for(int i=0; i<width; i++)
-    // {
-    //     for(int j=0; j<height; j++)
-    //     {
-    //         if(board[(x+i)*(y+j)] != " ")
-    //         {
-    //             overlap = true;
-    //             어디랑 겹쳤는지 찾기
-    //             int over_id = 겹친 아이디
-    //             break;
-    //         }
-    //     }
-    // }
-    // if(overlap == false) 새로운 줄기 생성
-    // {
-    //     num_r +=1;
-    //     page_c[num_r+1][0] = id;
-    // }
-    // else
-    // {
-    //     좀더 생각...
-    // }
+    for (int i = 0; i < p_v.size(); i++) {
+        for (int j = y; j < y+height; j++) {
+            for (int k = x; k < x+width; k++) {
+                if (board[width * height + height] == p_v[i].getcont()) {
+                    p_v[i].set_vec(p.getid());
+                }
+            }
+        }
+        sort(p_v[i].begin(), p_v[i].end());
+        unique(p_v[i].begin(), p_v[i].end());
+        //오름차순
 
-    // for(int i=0; i<width; i++)
-    // {
-    //     for(int j=0; j<height; j++)
-    //     {
-    //         output << board[(x+i)*(y+j)] << content;
-    //     }
-    // }
-    // print_board();
-
+        //조건 : 각 페이지에 접근한 다음, 현재 페이지의 아래에 있다면 above 벡터에 하나씩 넣음.
+        //페이지를 찾았다 -> p.set_vec(p1.getid());
+    }
+    p_v.push_back(p);
+    //현재 페이지를 그림 -- **
+    for (int j = y; j < y+height; j++) {
+            for (int k = x; k < x+width; k++) {
+                board[k][j] = content
+            }
+            
+    }
 }
 
-void Board::delete_page(int id) {
-    
+void Board::delete_page(int id) {   //8
+
+    vector <int> temp_vec;
+
+    for (int i = 0; i < p_v.size(); i++) {
+        if (p_v[i].getid() == id) {
+            temp_vec = p_v[i].get_vec();   // 그 페이지의 above 를 가져옴
+        }
+    }
+    if (temp_vec.empty()) {
+        //보드에서 해당 페이지를 지워준다.
+    }
+    for (int i = 0; i < temp_vec.size(); i++) {
+        delete_page(temp_vec[i]);
+    }
+
 }
 
 void Board::modify_content(int id, char content) {
