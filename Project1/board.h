@@ -91,7 +91,7 @@ void Board::insert_page(int x, int y, int width, int height, int id, int content
     for (int i = 0; i < p_v.size(); i++) {
         for (int j = y; j < y+height; j++) {
             for (int k = x; k < x+width; k++) {
-                if (board[width * height + height] == p_v[i].getcont()) {
+                if (board[width * y + x] == p_v[i].getcont()) {
                     p_v[i].set_vec(p.getid());
                 }
             }
@@ -107,7 +107,7 @@ void Board::insert_page(int x, int y, int width, int height, int id, int content
     //현재 페이지를 그림 -- **
     for (int j = y; j < y+height; j++) {
             for (int k = x; k < x+width; k++) {
-                board[k][j] = content
+                board[width * y + x] = content;
             }
             
     }
@@ -127,7 +127,7 @@ void Board::delete_page(int id) {   //8
     }
     if (temp_vec.empty()) {
         //보드에서 해당 페이지를 지워준다.
-        //getboard로 보드 저장하기 size = p_v.size()
+        
         p_v[size-1].getboard();
         print_board();
         print_job(n, 'i',  id);
@@ -140,8 +140,8 @@ void Board::delete_page(int id) {   //8
 }
 
 void Board::modify_content(int id, char content) {
-Page p(x, y, width, height, id, content);
-for(i=0; i<pv.size(); i++ )
+Page p(int x,int y,int width,int height,int id, content);
+for(int i=0; i<p_v.size(); i++ )
 {
     if(p_v[i].getid() == id)
     {
@@ -149,13 +149,13 @@ for(i=0; i<pv.size(); i++ )
     }
 }
 //delete_board, make_board 만들기
-//delete_board
+//delete_board(id);
 //insert_page(p.getX(), p.getY(), p.getW(), p.getH(), p.getid, content)
-//make_board
+//make_board(id);
 }
 void Board::modify_position(int id, int x, int y) {
    Page p(x, y, width, height, id, content);
-for(i=0; i<pv.size(); i++ )
+for(i=0; i<p_v.size(); i++ )
 {
     if(p_v[i].getid() == id)
     {
@@ -166,3 +166,27 @@ for(i=0; i<pv.size(); i++ )
     //insert_page(x,y, p.getW(), p.getH(), p.getid, p.getcont)
     //make_board
 }
+
+//void Board::delete_board(int id)
+//{
+//if (p_v[id].size() == 0)
+//{
+//    delete_page(p_v[id]);
+//}
+//for(i=p_v[id].size()-1; i>=0; i--)
+//{
+//    delete_board(p_v[i].getid());
+//}
+//}
+
+//void Board::make_board(int id)
+//{
+//if (p_v[id].size() == 0)
+//{
+//    insert_page(p_v[id]);
+//}
+//for(i=0; i<p_v[id].size(); i++)
+//{
+//    make_board(p_v[i].getid());
+//}
+//}
