@@ -19,7 +19,7 @@ public:
     void print_job(int job_idx, char job_type, int id);
 
     //job functions
-    void insert_page(int x, int y, int width, int height, int id, char content);
+    void insert_page(int x, int y, int width, int height, int id, int content);
     void delete_page(int id);
     void modify_content(int id, char content);
     void modify_position(int id, int x, int y);
@@ -55,7 +55,6 @@ Board::Board(int num_jobs, int width, int height, ofstream& output_stream) : out
 
 Board::~Board() {
     delete board;
-
 }
 
 
@@ -95,7 +94,7 @@ void Board::print_job(int job_idx, char job_type, int id) {
 }
 
 
-void Board::insert_page(int x, int y, int w, int h, int id, char content) {
+void Board::insert_page(int x, int y, int w, int h, int id, int content) {
     Page p(x, y, w, h, id, content);
 
     for (int i = 0; i < p_v.size(); i++) {
@@ -139,18 +138,20 @@ void Board::delete_page(int id) {
 }
 
 void Board::modify_content(int id, char content) {
-    int target;
-    delete_board(id);
-    for (int i = 0; i < p_v.size(); i++) //p_v에서 지운 아이디를 삭제한다.
+    int xx, yy, ww, hh, ii, cc;
+    for (int i = 0; i < p_v.size(); i++) //찾기
     {
         if (p_v[i].id == id)
         {
-            target = i;
-            p_v[i].content = content;
+            xx = p_v[i].x;
+            yy = p_v[i].y;
+            ww = p_v[i].width;
+            hh = p_v[i].height;
         }
-        
     }
-    insert_page(p_v[target].x, p_v[target].y, p_v[target].width, p_v[target].height, p_v[target].id, p_v[target].content);
+    cc = content;
+    delete_board(id);
+    insert_page(xx, yy, ww, hh, ii, cc);
     make_l.pop_back(); //맨뒤의 id는 다시 만들게 아니므로 제거
     for (int i = make_l.size() - 1; i >= 0; i--)
     {
@@ -159,18 +160,22 @@ void Board::modify_content(int id, char content) {
     make_l.clear();
 }
 void Board::modify_position(int id, int x, int y) {
-    int target;
-    delete_board(id);
-    for (int i = 0; i < p_v.size(); i++) //p_v에서 지운 아이디를 삭제한다.
+    int xx, yy, ww, hh, ii, cc;
+    for (int i = 0; i < p_v.size(); i++) //찾기
     {
-        if (p_v[i].getid() == id)
+        if (p_v[i].id == id)
         {
-            target = i;
-            p_v[i].x = x;
-            p_v[i].y = y;
+            // xx = p_v[i].x;
+            // yy = p_v[i].y;
+            ww = p_v[i].width;
+            hh = p_v[i].height;
+            cc = p_v[i].content;
         }
     }
-    insert_page(p_v[target].getX(), p_v[target].getY(), p_v[target].getW(), p_v[target].getH(), p_v[target].getid(), p_v[target].getcont());
+    xx = x;
+    yy = y;
+    delete_board(id);
+    insert_page(xx, yy, ww, hh, ii, cc);
     make_l.pop_back(); //맨뒤의 id는 다시 만들게 아니므로 제거
     for (int i = make_l.size() - 1; i >= 0; i--)
     {
@@ -181,10 +186,15 @@ void Board::modify_position(int id, int x, int y) {
 
 void Board::add_board()
 {
+    for (int h = 0; h < height; h++) {
+        for (int w = 0; w < width; w++) {
+            board[h * width + w] = ' ';
+        }
+    }
     for (int i = 0; i < p_v.size(); i++)
     {
-        for (int j = p_v[i].y; j < p_v[i].y + height; j++) {
-            for (int k = p_v[i].x; k < p_v[i].x + width; k++)
+        for (int j = p_v[i].y; j < p_v[i].y + p_v[i].height; j++) {
+            for (int k = p_v[i].x; k < p_v[i].x + p_v[i].width; k++)
             {
                 board[width * j + k] = p_v[i].content;
             }
@@ -192,6 +202,7 @@ void Board::add_board()
         }
     }
 }
+
 
 void Board::delete_board(int id)
 {
@@ -204,7 +215,6 @@ void Board::delete_board(int id)
             break;
         }
     }
-
     if (p_v[target_id].above.size() == 0)
     {
         make_l.push_back(p_v[target_id]); // 삭제 대상 Page를 make_l에 추가
