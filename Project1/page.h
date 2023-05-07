@@ -13,13 +13,14 @@ public:
     void set_vec(int a) { above.push_back(a); }
     void asd_vec() { sort(above.begin(), above.end()); }//오름차순
     void des_vec() { reverse(above.begin(), above.end()); }//내림차순
-
+    vector <int> above;
+    vector <int> make_l;
     Page(int x, int y, int width, int height, int id, int content)
         : x(x), y(y), width(width), height(height), id(id), content(content) {}
 
 
 private:
-    vector <int> above;
+    
     int x, y; // position of the page on the board
     int width, height; // width and height of the page 
     int id; // unique id for each page
