@@ -10,8 +10,6 @@ public:
     int getH() { return height; }
     int getid() { return id; }
     char getcont() { return content; }
-    //void asd_vec() { sort(above.begin(), above.end()); }//오름차순
-    //void des_vec() { reverse(above.begin(), above.end()); }//내림차순
     
     Page(int x, int y, int width, int height, int id, int content)
         : x(x), y(y), width(width), height(height), id(id), content(content) {}
