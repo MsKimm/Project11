@@ -2,7 +2,7 @@
 #include <vector>
 #include "page.h"
 
-using namespace std;
+
 using std::endl;
 using std::ofstream;
 
@@ -165,8 +165,7 @@ void Board::modify_position(int id, int x, int y) {
     {
         if (p_v[i].id == id)
         {
-            // xx = p_v[i].x;
-            // yy = p_v[i].y;
+           
             ww = p_v[i].width;
             hh = p_v[i].height;
             cc = p_v[i].content;
@@ -182,7 +181,8 @@ void Board::modify_position(int id, int x, int y) {
         insert_page(make_l[i].x, make_l[i].y, make_l[i].width, make_l[i].height, make_l[i].id, make_l[i].content);
     }
     make_l.clear();
-}
+    
+} 
 
 void Board::add_board()
 {
